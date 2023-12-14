@@ -11,7 +11,6 @@ There are many benefits in hosting a private model. However, it is difficult and
 to adjust the behavior of model to get the same results of a larger model.
 
 ### Inputs
-
 - Smaller large language model -> Type: LLM
 - Agent model (Gemini) -> Type: LLM
 - queries -> List[str]
@@ -24,13 +23,21 @@ to adjust the behavior of model to get the same results of a larger model.
 ---
 ## Idea 2
 
-Creating an application where a user can input:
- - a receipt from a store and it generates:
-- a picture of item(s)
+### Overview
+An AI asistant that helps you buy cost efficieve items at the grocery store while helping avoid harmful products
+
+### Problem Statement
+When shopping for food it is always difficult to determine what items contain harmful products. In addition 
+it could time consuming to determine what recipes you can make with items you don't often purchase.
+
+### Inputs
+- a receipt from a store -> Type: Bytes
+- a picture of item(s) -> Type: Bytes
     - using the multimodal capabilities to find item
 
-- the ingredients in the food items
+### Outputs
+- the ingredients in the food item(s)
 - informs the user if any of the food items contain unhealth ingredients
    - suggests healthier alternatives
-- suggests recipes based on the receipt
+- suggests recipes based on input
    - calculates the nutrition per serving of suggested recipe
