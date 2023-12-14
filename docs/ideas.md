@@ -1,6 +1,7 @@
 # ♊ 🏆 Gemini Hackathon
-## Idea 1
 ---
+## Idea 1
+
 
 ### Overview
 Using Gemini as a agent for prompt engineering smaller models using trulens to verify the output
@@ -12,7 +13,7 @@ to adjust the behavior of model to get the same results of a larger model.
 ### Inputs
 
 - Smaller large language model -> Type: LLM
-- Agent model (Gemini) -> Type LLM
+- Agent model (Gemini) -> Type: LLM
 - queries -> List[str]
 - Prompt Templates (will be a list to sample template fragments) -> List[str]
 
@@ -20,8 +21,9 @@ to adjust the behavior of model to get the same results of a larger model.
 - metrics -> List[float] (for every element in query)
 - New Prompt Templates List[str] | str
 
-## Idea 2
 ---
+## Idea 2
+
 Creating an application where a user can input:
  - a receipt from a store and it generates:
 - a picture of item(s)
