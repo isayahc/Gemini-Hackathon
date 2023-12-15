@@ -41,3 +41,6 @@ it could time consuming to determine what recipes you can make with items you do
    - suggests healthier alternatives
 - suggests recipes based on input
    - calculates the nutrition per serving of suggested recipe
+
+### Memory
+- stores recipes and conversations in database stored of google cloud provide user has a valid api key they can access their data
