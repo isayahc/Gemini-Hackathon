@@ -30,6 +30,9 @@ Brief description of your project.
 
 Instructions for how to contribute to the project.
 
+## Resources
+- [Google Gemini Notebook](https://colab.research.google.com/github/google/generative-ai-docs/blob/main/site/en/tutorials/python_quickstart.ipynb#scrollTo=vm9tUYeT8lBc)
+
 ## License
 
 [MIT](LICENSE)
