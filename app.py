@@ -1,20 +1,37 @@
+from openai import OpenAI
 import streamlit as st
-from PIL import Image
-from io import BytesIO
 
-def main():
-    st.title("Image Upload and Display")
+st.title("ChatGPT-like clone")
 
-    # File uploader widget
-    uploaded_files = st.file_uploader("Choose image files", accept_multiple_files=True, type=['png', 'jpg', 'jpeg'])
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-    if uploaded_files:
-        for uploaded_file in uploaded_files:
-            # Convert the file to an image
-            image = Image.open(BytesIO(uploaded_file.getvalue()))
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
-            # Display the image
-            st.image(image, caption=f"Uploaded Image: {uploaded_file.name}", use_column_width=True)
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-if __name__ == "__main__":
-    main()
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+if prompt := st.chat_input("What is up?"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        for response in client.chat.completions.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        ):
+            full_response += (response.choices[0].delta.content or "")
+            message_placeholder.markdown(full_response + "▌")
+        message_placeholder.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
