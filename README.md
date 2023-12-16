@@ -32,6 +32,7 @@ Instructions for how to contribute to the project.
 
 ## Resources
 - [Google Gemini Notebook](https://colab.research.google.com/github/google/generative-ai-docs/blob/main/site/en/tutorials/python_quickstart.ipynb#scrollTo=vm9tUYeT8lBc)
+- [Handling Images for streamlit](https://discuss.streamlit.io/t/adding-in-streamlit-chat-input-the-possibility-to-add-an-image/55156/4)
 
 ## License
 
