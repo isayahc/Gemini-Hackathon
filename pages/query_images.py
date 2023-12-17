@@ -20,9 +20,17 @@ def convert_uploaded_file(uploaded_file) -> Dict[str, bytes]:
 
 def main():
     st.title("Image Upload Example")
+    st.subheader("Here is where you can upload images and see the results of GEMINI.")
 
     # File uploader allows user to add multiple files
     uploaded_files = st.file_uploader("Choose images", accept_multiple_files=True, type=['png', 'jpg', 'jpeg'])
+
+    user_prompt = st.text_input(
+        'prompt for gemi',
+        "Write a short, engaging blog post based on these picture.",
+        placeholder="please choose a prompt",
+        )
+    
 
     if uploaded_files:
         for uploaded_file in uploaded_files:
@@ -30,11 +38,14 @@ def main():
 
             # Generate content for each image
             response = model.generate_content(
-                ["Write a short, engaging blog post based on these picture.", converted_file], 
-                # stream=True,
+                    [
+                    user_prompt,
+                    converted_file,
+                    ], 
+                stream=True,
                 )
             st.text(response.resolve())
-            st.text(response.text)
+            st.markdown(response.text)
 
             # Display the image
             image = Image.open(io.BytesIO(uploaded_file.getvalue()))
