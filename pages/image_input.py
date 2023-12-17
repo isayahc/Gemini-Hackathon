@@ -1,21 +1,22 @@
 import streamlit as st
 from PIL import Image
-from typing import List
 import io
+from typing import List, Dict
 from src.Gemini.gemini import genai
 
 model = genai.GenerativeModel('gemini-pro-vision')
 
-# response = model.generate_content(["Write a short, engaging blog post based on this picture. It should include a description of the meal in the photo and talk about my journey meal prepping.", img], stream=True)
-# response.resolve()
+def convert_uploaded_file(uploaded_file) -> Dict[str, bytes]:
+    # Determine the MIME type
+    mime_type = uploaded_file.type
 
-def load_images(uploaded_files: List) -> List[Image.Image]:
-    images = []
-    for uploaded_file in uploaded_files:
-        # Read the file and convert it to a PIL image
-        image = Image.open(io.BytesIO(uploaded_file.read()))
-        images.append(image)
-    return images
+    # Read the file and store it in the desired format
+    file_data = {
+        'mime_type': mime_type,
+        'data': uploaded_file.read()
+    }
+
+    return file_data
 
 def main():
     st.title("Image Upload Example")
@@ -24,15 +25,19 @@ def main():
     uploaded_files = st.file_uploader("Choose images", accept_multiple_files=True, type=['png', 'jpg', 'jpeg'])
 
     if uploaded_files:
-        images = load_images(uploaded_files)
+        for uploaded_file in uploaded_files:
+            converted_file = convert_uploaded_file(uploaded_file)
 
-        response = model.generate_content(
-            ["Write a short, engaging blog post based on this picture. It should include a description of the meal in the photo and talk about my journey meal prepping.", images], 
-            stream=True)
-        st.text(response.resolve())
-        # response.resolve()
+            # Generate content for each image
+            response = model.generate_content(
+                ["Write a short, engaging blog post based on these picture.", converted_file], 
+                # stream=True,
+                )
+            st.text(response.resolve())
+            st.text(response.text)
 
-        for image in images:
+            # Display the image
+            image = Image.open(io.BytesIO(uploaded_file.getvalue()))
             st.image(image, use_column_width=True)
 
 if __name__ == "__main__":
