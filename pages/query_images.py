@@ -31,25 +31,32 @@ def main():
         placeholder="please choose a prompt",
         )
     
-
     if uploaded_files:
         for uploaded_file in uploaded_files:
+            # Check if file size exceeds the limit
+            if uploaded_file.size > 4194304:  # 4 MB limit
+                st.error("File size exceeds the limit of 4 MB. Please upload a smaller file.")
+                continue
+
             converted_file = convert_uploaded_file(uploaded_file)
 
-            # Generate content for each image
-            response = model.generate_content(
-                    [
-                    user_prompt,
-                    converted_file,
-                    ], 
-                stream=True,
-                )
-            st.text(response.resolve())
-            st.markdown(response.text)
+            try:
+                # Generate content for each image
+                response = model.generate_content(
+                        [
+                        user_prompt,
+                        converted_file,
+                        ], 
+                    stream=True,
+                    )
+                st.text(response.resolve())
+                st.markdown(response.text)
 
-            # Display the image
-            image = Image.open(io.BytesIO(uploaded_file.getvalue()))
-            st.image(image, use_column_width=True)
+                # Display the image
+                image = Image.open(io.BytesIO(uploaded_file.getvalue()))
+                st.image(image, use_column_width=True)
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     main()
