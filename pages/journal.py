@@ -1,4 +1,3 @@
-# Import necessary libraries
 import streamlit as st
 import datetime
 import pandas as pd
@@ -27,8 +26,13 @@ with st.form("new_entry"):
     submit_button = st.form_submit_button("Submit")
 
     if submit_button:
-        # Add new entry to the data
-        data = data.append({'Date': entry_date, 'Entry': entry_text}, ignore_index=True)
+        # Create a new DataFrame for the new entry
+        new_entry = pd.DataFrame({'Date': [entry_date], 'Entry': [entry_text]})
+
+        # Concatenate the new entry with the existing data
+        data = pd.concat([data, new_entry], ignore_index=True)
+
+        # Save the updated data
         save_data(data)
 
 # Display past entries
