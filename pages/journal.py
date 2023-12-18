@@ -22,7 +22,7 @@ data = load_data()
 # User input for new journal entry
 with st.form("new_entry"):
     entry_date = st.date_input("Date", datetime.date.today())
-    entry_text = st.text_area("Journal Entry")
+    entry_text = st.text_area("Journal Entry", help="You can use Markdown formatting here.")
     submit_button = st.form_submit_button("Submit")
 
     if submit_button:
@@ -39,7 +39,8 @@ with st.form("new_entry"):
 st.write("## Past Entries")
 for _, row in data.iterrows():
     st.write(f"### {row['Date']}")
-    st.write(row['Entry'])
+    # Render the entry as Markdown
+    st.markdown(row['Entry'], unsafe_allow_html=True)
     st.markdown("---")
 
 # Run the app: streamlit run your_script.py
