@@ -18,7 +18,21 @@ def convert_uploaded_file(uploaded_file) -> Dict[str, bytes]:
 
     return file_data
 
-def main():
+def query_images_page():
+
+    # def convert_uploaded_file(uploaded_file) -> Dict[str, bytes]:
+    #     # Determine the MIME type
+    #     mime_type = uploaded_file.type
+
+    #     # Read the file and store it in the desired format
+    #     file_data = {
+    #         'mime_type': mime_type,
+    #         'data': uploaded_file.read()
+    #     }
+
+    #     return file_data
+
+    # def main():
     st.title("Image Upload Example")
     st.subheader("Here is where you can upload images and see the results of GEMINI.")
 
@@ -58,5 +72,8 @@ def main():
             except Exception as e:
                 st.error(f"An error occurred: {e}")
 
+
 if __name__ == "__main__":
-    main()
+    query_images_page()
+    # if __name__ == "__main__":
+    #     main()

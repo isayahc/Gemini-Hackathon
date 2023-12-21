@@ -3,27 +3,51 @@ import streamlit as st
 import os
 from tempfile import NamedTemporaryFile
 
-import pages.info
-import pages.journal
-import pages.login
-import pages.query_images
+# import pages.info
+from pages.info import info_page
+from pages.journal import journal_page
+from pages.query_images import query_images_page
+
+# import pages.journal
+# import pages.login
+# import pages.query_images
 
 PAGES = {
-    "Info": pages.info,
-    "Journal": pages.journal,
-    "Login": pages.login,
-    "Query Images": pages.query_images,
+    # "Info": pages.info,
+    "Info": info_page,
+    "Journal": journal_page,
+    "Query Images": query_images_page,
+    # "Journal": pages.journal,
+    # "Login": pages.login,
+    # "Query Images": pages.query_images,
 
 }
 
+if os.getenv('DEV_ENV'):
+    user_api_key= os.getenv('DEV_EMAIL')
+    user_email = os.getenv('DEV_API_KEY')
 
 def main():
     # Set up the title of the application
     st.title("ChatGPT-like clone")
 
     # User input for email and API key (not used in Gemini client)
-    user_email = st.sidebar.text_input("Email")
-    user_api_key = st.sidebar.text_input("API Key", type="password")
+    # user_email = st.sidebar.text_input("Email")
+    # user_api_key = st.sidebar.text_input("API Key", type="password")
+
+    # user_api_key = st.text_input("Enter a secret", type="password")
+
+    # Save the input to the session state
+    if user_api_key:
+        st.session_state['user_api_key'] = user_api_key
+        st.write("Secret set. Navigate to Page 2 to view the secret.")
+
+    # user_email = st.text_input("Enter a value")
+
+    # Save the input to the session state
+    if user_email:
+        st.session_state['user_email'] = user_email
+        st.write(f"Value set to: {user_email}")
 
     # Initialize OpenAI client with API key from Streamlit secrets
     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
