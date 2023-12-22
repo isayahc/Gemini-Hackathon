@@ -12,6 +12,11 @@ from pages.query_images import query_images_page
 # import pages.login
 # import pages.query_images
 
+if os.getenv('DEV_ENV'):
+    user_api_key = os.getenv('DEV_API_KEY')
+    user_email = os.getenv('DEV_EMAIL')
+
+
 PAGES = {
     # "Info": pages.info,
     "Info": info_page,
@@ -23,9 +28,6 @@ PAGES = {
 
 }
 
-if os.getenv('DEV_ENV'):
-    user_api_key= os.getenv('DEV_EMAIL')
-    user_email = os.getenv('DEV_API_KEY')
 
 def main():
     # Set up the title of the application
