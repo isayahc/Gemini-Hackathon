@@ -3,6 +3,7 @@ from typing import Dict
 import datetime
 import os
 import uuid
+from typing import Any
 
 def get_entries(email: str, api_key: str) -> Dict:
     url = f"{os.getenv('API_DOMAIN')}/api/v1/get-entries"
@@ -20,33 +21,6 @@ def get_entries(email: str, api_key: str) -> Dict:
         return response.json()
     else:
         response.raise_for_status()
-
-
-# def add_entry(email: str, api_key: str, date: str, content: str) -> Dict:
-#     url = f"{os.getenv('API_DOMAIN')}/api/v1/add-entry"
-#     headers = {
-#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
-#     }
-#     params = {
-#         "email": email,
-#         "api_key": api_key
-#     }
-#     data = {
-#         "date": date,
-#         "content": content
-#     }
-
-#     # Convert date to string if it's a date object
-#     if isinstance(date, datetime.date):
-#         date = date.isoformat()
-    
-#     response = requests.post(url, headers=headers, params=params, json=data)
-    
-#     if response.ok:
-#         return response.json()
-#     else:
-#         response.raise_for_status()
-
 
 
 def delete_entry(email: str, api_key: str, entry_id: str) -> Dict:
@@ -77,6 +51,7 @@ def delete_entry(email: str, api_key: str, entry_id: str) -> Dict:
     else:
         response.raise_for_status()
 
+
 def add_entry(email: str, api_key: str, date: str, content: str) -> Dict:
     url = f"{os.getenv('API_DOMAIN')}/api/v1/add-entry"
     headers = {
@@ -103,3 +78,37 @@ def add_entry(email: str, api_key: str, date: str, content: str) -> Dict:
     else:
         response.raise_for_status()
 
+
+def update_entry(email: str, api_key: str, entry_id: str, date: datetime.date, content: str) -> Dict[str, Any]:
+    """
+    Updates an existing entry on the server.
+
+    Parameters:
+    - email (str): The email address associated with the entry.
+    - api_key (str): The API key for authentication.
+    - entry_id (str): The unique identifier for the entry to update.
+    - date (datetime.date): The date of the entry.
+    - content (str): The content of the entry.
+
+    Returns:
+    - Dict[str, Any]: The JSON response from the server.
+    """
+    url = f"{os.getenv('API_DOMAIN')}/api/v1/update-entry/{entry_id}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+    }
+    params = {
+        "email": email,
+        "api_key": api_key
+    }
+    data = {
+        "date": date.isoformat() if isinstance(date, datetime.date) else date,
+        "content": content
+    }
+    
+    response = requests.put(url, headers=headers, params=params, json=data)
+    
+    if response.ok:
+        return response.json()
+    else:
+        response.raise_for_status()
