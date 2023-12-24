@@ -36,8 +36,8 @@ def save_data(dataframe):
 
 
 def journal_page():
-    st.title('Your Personal Journal Journal')
-    st.text("This is where you can your progress and thought with regards to health and wellness. All information you input will used to help me provide you with the best possible service. You can keep it open ended and i will use it to help you with your goals.")
+    st.title('Your Personal Wellness')
+    st.markdown("This is where you can your progress and thought with regards to health and wellness. All information you input will used to help me provide you with the best possible service. You can keep it open ended and i will use it to help you with your goals.")
 
     data = load_data()
 

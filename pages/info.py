@@ -2,20 +2,34 @@ import streamlit as st
 import os
 
 
-def info_page():
-    # Set up the title of the application
-    st.title("Welcome to Health Assistant")
-    st.text("Use AI to automated the boring things about your health.\nFocus on living feel and feeling your best.")
 
+def info_page():
     st.markdown(
-        f"""
-        To use this service you must crate an account [Here]({os.getenv('API_DOMAIN')}).
         """
+        # Welcome to Health Assistant
+
+        Use AI to automate the boring things about your health. Focus on living well and feeling your best.
+
+        ## Before You Begin
+
+        - To use this service, you must create an account [here]({}) via Google or GitHub.
+        - After logging in to the service, you will be given an API key. Copy this key and paste it in the input box below, along with your email account.
+
+        ## Additional Notes
+
+        ### Tech stack
+
+        - Google Cloud Platform
+        - Streamlit
+        - Firestore
+
+        ### Bugs
+
+        - In the journal page, if you get an error, try swtiching to the main page and back to the journal page.
+        - In the journal page, you have to press the edit button twice to edit the entry.
+        """.format(os.getenv('API_DOMAIN'))
     )
 
-    if os.getenv('DEV_ENV'):
-    # Development-only features
-        st.write("This is visible only in development")
 
 
 if __name__ == "__main__":
