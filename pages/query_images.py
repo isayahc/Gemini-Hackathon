@@ -103,23 +103,24 @@ def query_images_page():
                 else:
                     converted_file = convert_uploaded_file(uploaded_file)
                     # return converted_file
-            try:
+            # try:
                 # Generate content for each image
-                response = model.generate_content(
-                        [
-                        user_prompt,
-                        converted_file,
-                        ], 
-                    stream=True,
-                    )
-                # st.text(response.resolve())
-                st.markdown(response.text)
+            response = model.generate_content(
+                    [
+                    user_prompt,
+                    converted_file,
+                    ], 
+                # stream=True,
+                )
+            # st.text(response.resolve())
+            st.markdown(response.text)
+            print(response.text)
 
-                # Display the image
-                image = Image.open(io.BytesIO(uploaded_file.getvalue()))
-                st.image(image, use_column_width=True)
-            except Exception as e:
-                pass
+            # Display the image
+            image = Image.open(io.BytesIO(uploaded_file.getvalue()))
+            st.image(image, use_column_width=True)
+            # except Exception as e:
+            #     pass
 
 
 if __name__ == "__main__":
