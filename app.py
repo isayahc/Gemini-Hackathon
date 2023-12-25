@@ -15,11 +15,16 @@ if os.getenv('DEV_ENV'):
 
 
 else:
-    st.write("API Key:", st.secrets["DEV_API_KEY"])
-    st.write("YOUR EMAIL:", st.secrets["DEV_EMAIL"])
+    # st.write("API Key:", st.secrets["DEV_API_KEY"])
+    # st.write("YOUR EMAIL:", st.secrets["DEV_EMAIL"])
 
-    st.session_state['user_api_key'] = st.secrets["DEV_API_KEY"]
-    st.session_state['user_email'] = st.secrets["DEV_EMAIL"]
+    # st.session_state['user_api_key'] = st.secrets["DEV_API_KEY"]
+    # st.session_state['user_email'] = st.secrets["DEV_EMAIL"]
+
+    user_api_key = st.text_input("Enter your API key:", type="password")
+    user_email = st.text_input("Enter your EMAIL:", type="password")
+    st.session_state['user_email'] = user_email
+    st.session_state['user_api_key'] = user_api_key
 
 
 if user_api_key:
