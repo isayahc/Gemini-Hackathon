@@ -9,34 +9,47 @@ from pages.journal import journal_page
 from pages.query_images import query_images_page
 
 
+
+# def initialize_env_states() -> None:
+#     """
+    
+#     """
+# Function to initialize the session state
+def init_session_state():
+    if 'user_api_key' not in st.session_state:
+        st.session_state['user_api_key'] = None
+    
+    if 'user_email' not in st.session_state:
+        st.session_state['user_email'] = None
+    
+# Initialize session state
+init_session_state()
+
+
 if os.getenv('DEV_ENV'):
     user_api_key = os.getenv('DEV_API_KEY')
     user_email = os.getenv('DEV_EMAIL')
 
 
-else:
-    # st.write("API Key:", st.secrets["DEV_API_KEY"])
-    # st.write("YOUR EMAIL:", st.secrets["DEV_EMAIL"])
-
-    # st.session_state['user_api_key'] = st.secrets["DEV_API_KEY"]
-    # st.session_state['user_email'] = st.secrets["DEV_EMAIL"]
-
-    user_api_key = st.text_input("Enter your API key:", type="password")
-    user_email = st.text_input("Enter your EMAIL:", type="password")
-    st.session_state['user_email'] = user_email
-    st.session_state['user_api_key'] = user_api_key
+# else:
+#     user_api_key = st.text_input("Enter your API key:", type="password")
+#     user_email = st.text_input("Enter your EMAIL:", type="password")
+#     st.session_state['user_email'] = user_email
+#     st.session_state['user_api_key'] = user_api_key
 
 
 if user_api_key:
-    # st.session_state['user_api_key'] = user_api_key
-    st.write("Secret set. Navigate to Page 2 to view the secret.")
+    st.session_state['user_api_key'] = user_api_key
+else:
+    user_api_key = st.text_input("Enter your API key:", type="password")
 
 
-# Save the input to the session state
+
 if user_email:
-    # st.session_state['user_email'] = user_email
-    st.write(f"Value set to: {user_email}")
-
+    user_email = st.text_input("Enter your EMAIL:", type="password")
+else:
+    st.session_state['user_email'] = user_email
+    
 
 PAGES = {
     # "Info": pages.info,
@@ -46,6 +59,8 @@ PAGES = {
 }
 
 load_dotenv()
+
+initialize_env_states()
 
 
 st.title("Chat - Gemini Bot")
@@ -104,15 +119,13 @@ def llm_function(query):
     )
 
 def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-    # del st.session_state.messages
-    # if "messages" not in st.session_state:
-    #     st.session_state.messages = [
-    #         {
-    #             "role":"assistant",
-    #             "content":"Ask me Anything"
-    #         }
-    #     ]
+    st.session_state.messages = [
+        {
+            "role": "assistant",
+            "content": "How may I assist you today?"
+        }
+    ]
+
 
    
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
