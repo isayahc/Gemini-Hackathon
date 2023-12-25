@@ -27,7 +27,7 @@ def info_page():
 
         - In the journal page, if you get an error, try swtiching to the main page and back to the journal page.
         - In the journal page, you have to press the edit button twice to edit the entry.
-        """.format(os.getenv('API_DOMAIN'))
+        """.format(st.secrets['API_DOMAIN'])
     )
 
 
