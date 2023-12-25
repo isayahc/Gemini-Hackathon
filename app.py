@@ -15,6 +15,14 @@ from pages.query_images import query_images_page
     
 #     """
 # Function to initialize the session state
+
+# else:
+#     user_api_key = st.text_input("Enter your API key:", type="password")
+#     user_email = st.text_input("Enter your EMAIL:", type="password")
+#     st.session_state['user_email'] = user_email
+#     st.session_state['user_api_key'] = user_api_key
+
+
 def init_session_state():
     if 'user_api_key' not in st.session_state:
         st.session_state['user_api_key'] = None
@@ -34,11 +42,7 @@ if os.getenv('DEV_ENV'):
     user_email = os.getenv('DEV_EMAIL')
 
 
-# else:
-#     user_api_key = st.text_input("Enter your API key:", type="password")
-#     user_email = st.text_input("Enter your EMAIL:", type="password")
-#     st.session_state['user_email'] = user_email
-#     st.session_state['user_api_key'] = user_api_key
+
 
 
 if user_api_key:
@@ -63,7 +67,7 @@ PAGES = {
 
 load_dotenv()
 
-initialize_env_states()
+# initialize_env_states()
 
 
 st.title("Chat - Gemini Bot")
