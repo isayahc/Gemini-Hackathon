@@ -14,6 +14,25 @@ if os.getenv('DEV_ENV'):
     user_email = os.getenv('DEV_EMAIL')
 
 
+else:
+    st.write("API Key:", st.secrets["'DEV_API_KEY"])
+    st.write("YOUR EMAIL:", st.secrets["DEV_EMAIL"])
+
+    st.session_state['user_api_key'] = st.secrets["DEV_API_KEY"]
+    st.session_state['user_email'] = st.secrets["DEV_EMAIL"]
+
+
+if user_api_key:
+    # st.session_state['user_api_key'] = user_api_key
+    st.write("Secret set. Navigate to Page 2 to view the secret.")
+
+
+# Save the input to the session state
+if user_email:
+    # st.session_state['user_email'] = user_email
+    st.write(f"Value set to: {user_email}")
+
+
 PAGES = {
     # "Info": pages.info,
     "Info": info_page,
