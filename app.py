@@ -23,39 +23,60 @@ from pages.query_images import query_images_page
 #     st.session_state['user_api_key'] = user_api_key
 
 
-def init_session_state():
-    if 'user_api_key' not in st.session_state:
-        st.session_state['user_api_key'] = None
+# def init_session_state():
+#     if 'user_api_key' not in st.session_state:
+#         st.session_state['user_api_key'] = None
     
-    if 'user_email' not in st.session_state:
-        st.session_state['user_email'] = None
+#     if 'user_email' not in st.session_state:
+#         st.session_state['user_email'] = None
     
 # Initialize session state
-init_session_state()
+# init_session_state()
 
 # user_api_key = st.text_input("Enter your API key:", type="password")
 # user_email = st.text_input("Enter your EMAIL:", type="password")
 
 
-if os.getenv('DEV_ENV'):
-    user_api_key = os.getenv('DEV_API_KEY')
-    user_email = os.getenv('DEV_EMAIL')
+# if os.getenv('DEV_ENV'):
+#     user_api_key = os.getenv('DEV_API_KEY')
+#     user_email = os.getenv('DEV_EMAIL')
+
+
+# if 'user_api_key' not in st.session_state:
+#     # user_api_key = None
+#     # st.session_state['user_api_key'] = None
+#     print("Huh")
+#     # pass
+# else:
+#     user_api_key = st.text_input("Enter your API key:", type="password")
+#     st.session_state['user_api_key'] = user_api_key
+#     # st.secrets['user_api_key'] = user_api_key
 
 
 
+# if 'user_email' not in st.session_state:
+#     # user_email = None
+#     # st.session_state['user_email'] = None
+#     print("Huh")
+#     # pass
+# else:
+#     user_email = st.text_input("Enter your EMAIL:", type="password")
+#     st.session_state['user_email'] = user_email
+#     # st.secrets['user_email'] = user_email
+
+print(st.session_state)
+
+# if user_api_key:
+#     st.session_state['user_api_key'] = user_api_key
+# else:
+#     user_api_key = st.text_input("Enter your API key:", type="password")
 
 
-if user_api_key:
-    st.session_state['user_api_key'] = user_api_key
-else:
-    user_api_key = st.text_input("Enter your API key:", type="password")
 
-
-
-if user_email:
-    user_email = st.text_input("Enter your EMAIL:", type="password")
-else:
-    st.session_state['user_email'] = user_email
+# if user_email:
+#     user_email = st.text_input("Enter your EMAIL:", type="password")
+# else:
+#     st.session_state['user_email'] = user_email
     
 
 PAGES = {
