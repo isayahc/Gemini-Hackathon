@@ -15,7 +15,7 @@ if os.getenv('DEV_ENV'):
 
 
 else:
-    st.write("API Key:", st.secrets["'DEV_API_KEY"])
+    st.write("API Key:", st.secrets["DEV_API_KEY"])
     st.write("YOUR EMAIL:", st.secrets["DEV_EMAIL"])
 
     st.session_state['user_api_key'] = st.secrets["DEV_API_KEY"]
