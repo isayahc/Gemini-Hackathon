@@ -33,8 +33,8 @@ def init_session_state():
 # Initialize session state
 init_session_state()
 
-user_api_key = st.text_input("Enter your API key:", type="password")
-user_email = st.text_input("Enter your EMAIL:", type="password")
+# user_api_key = st.text_input("Enter your API key:", type="password")
+# user_email = st.text_input("Enter your EMAIL:", type="password")
 
 
 if os.getenv('DEV_ENV'):
