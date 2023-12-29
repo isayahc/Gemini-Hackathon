@@ -112,3 +112,21 @@ def update_entry(email: str, api_key: str, entry_id: str, date: datetime.date, c
         return response.json()
     else:
         response.raise_for_status()
+
+def query_entries(email: str, api_key: str, query:str) -> Dict:
+    url = f"{os.getenv('API_DOMAIN')}/api/v1/entries-queries"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+    }
+    params = {
+        "email": email,
+        "api_key": api_key,
+        "query" : query,
+    }
+    
+    response = requests.get(url, headers=headers, params=params)
+    
+    if response.ok:
+        return response.json()
+    else:
+        response.raise_for_status()
