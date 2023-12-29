@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from api_utils import get_entries, add_entry, delete_entry, update_entry
+from api_utils import get_entries, add_entry, delete_entry, update_entry, query_entries
 from datetime import datetime
 import json
 import os
@@ -10,6 +10,11 @@ from typing import Any, Dict, List, Optional, Union
 if os.getenv('DEV_ENV'):
     user_api_key = os.getenv('DEV_API_KEY')
     user_email = os.getenv('DEV_EMAIL')
+    st.session_state['user_email'] = user_email
+    st.session_state['user_api_key'] = user_api_key
+else:
+    user_email = st.session_state['user_email']
+    user_api_key = st.session_state['user_api_key']
 
 def load_data():
     user_email = st.session_state['user_email']
@@ -25,6 +30,35 @@ def load_data():
         df = pd.DataFrame(["id", "email", "date", "content"])
     return df
 
+@st.cache_data(ttl=(3600/2))
+def sample():
+    query = "based on the content of the data provide:\
+        1: the user with some tips on their life style, \
+        2: comment on progress they have made if any\
+        ## additional notes:\
+        please speak to the user directly"
+    
+    
+        # please also take notice of the dates of the entries and determin if the user is progressing in anyway"
+    data = query_entries(email=user_email, api_key=user_api_key, query=query)
+    return data
+
+@st.cache_data(ttl=(3600/2))
+def search_for_food_insights():
+    query = "based on the content of the data provide:\
+        1: the user with some tips on their life style, \
+        2: find any dietary needs\
+        3: find any favorite foods\
+        ## additional notes:\
+        please speak to the user directly"
+    
+    
+        # please also take notice of the dates of the entries and determin if the user is progressing in anyway"
+    data = query_entries(email=user_email, api_key=user_api_key, query=query)
+    
+    x=0
+    return data
+
 def delete_entry_with_id(entry_id: str):
     delete_entry(email=user_email, api_key=user_api_key, entry_id=entry_id)
     st.session_state['data'] = load_data()  # Reload the data
@@ -39,7 +73,20 @@ def journal_page():
     st.title('Your Personal Wellness')
     st.markdown("This is where you can your progress and thought with regards to health and wellness. All information you input will used to help me provide you with the best possible service. You can keep it open ended and i will use it to help you with your goals.")
 
+    cool:dict = sample()
+    food_insight:dict = search_for_food_insights()
+
+    st.title("Your food insights")
+    st.markdown(food_insight['response'])
+
+
+    # print(cool['messages'])
+    st.title("Life Progress")
+    st.markdown(cool['response'])
     data = load_data()
+
+    # st.write()
+    # sample = sample()
 
     if 'editing_entry' not in st.session_state:
         st.session_state['editing_entry'] = None
