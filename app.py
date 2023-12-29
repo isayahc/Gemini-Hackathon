@@ -9,7 +9,7 @@ from pages.journal import journal_page
 from pages.query_images import query_images_page
 
 
-
+# load_dotenv()
 # def initialize_env_states() -> None:
 #     """
     
@@ -37,9 +37,14 @@ from pages.query_images import query_images_page
 # user_email = st.text_input("Enter your EMAIL:", type="password")
 
 
-# if os.getenv('DEV_ENV'):
-#     user_api_key = os.getenv('DEV_API_KEY')
-#     user_email = os.getenv('DEV_EMAIL')
+if os.getenv('DEV_ENV'):
+    user_api_key = st.secrets['DEV_API_KEY']
+    user_email = st.secrets['DEV_EMAIL']
+
+    # print(st.secrets['DEV_API_KEY'])
+    print(user_api_key)
+    st.session_state['user_email'] = user_email
+    st.session_state['user_api_key'] = user_api_key
 
 
 # if 'user_api_key' not in st.session_state:
@@ -86,7 +91,7 @@ PAGES = {
     "Query Images": query_images_page,
 }
 
-load_dotenv()
+
 
 # initialize_env_states()
 
