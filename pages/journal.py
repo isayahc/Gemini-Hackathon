@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from api_utils import get_entries, add_entry, delete_entry, update_entry, query_entries
+from src.Utils.api_utils import get_entries, add_entry, delete_entry, update_entry, query_entries
 from datetime import datetime
 import json
 import os
