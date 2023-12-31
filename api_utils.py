@@ -5,10 +5,23 @@ import os
 import uuid
 from typing import Any
 
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+
 def get_entries(email: str, api_key: str) -> Dict:
+    """
+    This function is to get the entries of 
+
+    ## Parameters:
+    - email (str): The email address associated with the entry.
+    - api_key (str): The API key for authentication.
+
+    ## Returns 
+    List[Dict] of journal entries 
+    """
+    
     url = f"{os.getenv('API_DOMAIN')}/api/v1/get-entries"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+        "User-Agent": USER_AGENT
     }
     params = {
         "email": email,
@@ -27,17 +40,17 @@ def delete_entry(email: str, api_key: str, entry_id: str) -> Dict:
     """
     Deletes an entry from the server.
 
-    Parameters:
+    ## Parameters:
     - email (str): The email address associated with the entry.
     - api_key (str): The API key for authentication.
     - entry_id (str): The unique identifier for the entry to delete.
 
-    Returns:
+    ## Returns:
     - Dict: The JSON response from the server.
     """
     url = f"{os.getenv('API_DOMAIN')}/api/v1/delete-entry/{entry_id}"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+        "User-Agent": USER_AGENT
     }
     params = {
         "email": email,
@@ -55,7 +68,7 @@ def delete_entry(email: str, api_key: str, entry_id: str) -> Dict:
 def add_entry(email: str, api_key: str, date: str, content: str) -> Dict:
     url = f"{os.getenv('API_DOMAIN')}/api/v1/add-entry"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+        "User-Agent": USER_AGENT
     }
     params = {
         "email": email,
@@ -95,7 +108,7 @@ def update_entry(email: str, api_key: str, entry_id: str, date: datetime.date, c
     """
     url = f"{os.getenv('API_DOMAIN')}/api/v1/update-entry/{entry_id}"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+        "User-Agent": USER_AGENT
     }
     params = {
         "email": email,
@@ -114,9 +127,20 @@ def update_entry(email: str, api_key: str, entry_id: str, date: datetime.date, c
         response.raise_for_status()
 
 def query_entries(email: str, api_key: str, query:str) -> Dict:
+    """
+    This function is to get the entries of 
+
+    ## Parameters:
+    - email (str): The email address associated with the entry.
+    - api_key (str): The API key for authentication.
+    - query (str): a query for the user
+
+    ## Returns 
+    
+    """
     url = f"{os.getenv('API_DOMAIN')}/api/v1/entries-queries"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+        "User-Agent": USER_AGENT
     }
     params = {
         "email": email,
