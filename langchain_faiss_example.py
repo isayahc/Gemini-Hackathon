@@ -22,7 +22,7 @@ from trulens_eval import Feedback
 from trulens_eval import Select
 from trulens_eval import Tru
 
-from api_utils import get_entries
+from src.Utils.api_utils import get_entries
 from src.Utils.utils import save_to_json
 
 if os.getenv('DEV_ENV'):
@@ -150,8 +150,6 @@ def load_conversational_chain(vector_store):
 vector_store = FAISSStore.load_vector_store()
 chain, tru_chain_recorder = load_conversational_chain(vector_store)
 
-# with tru_chain_recorder as recording:
-#     ret = chain({"question": "What is trulens?", "chat_history":""})
 
 eval_questions = []
 with open('data/eval_questions.txt', 'r') as file:
