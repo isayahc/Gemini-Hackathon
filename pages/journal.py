@@ -61,10 +61,6 @@ def delete_entry_with_id(entry_id: str):
     st.session_state['data'] = load_data()  # Reload the data
     st.experimental_rerun()
 
-# Function to save data
-def save_data(dataframe):
-    dataframe.to_csv('journal_entries.csv', index=False)
-
 
 def journal_page():
 
