@@ -31,7 +31,7 @@ def load_data():
     return df
 
 @st.cache_data(ttl=(3600/2))
-def sample():
+def journal_rag():
     query = "based on the content of the data provide:\
         1: the user with some tips on their life style, \
         2: comment on progress they have made if any\
@@ -70,23 +70,28 @@ def save_data(dataframe):
 
 
 def journal_page():
-    st.title('Your Personal Wellness')
-    st.markdown("This is where you can your progress and thought with regards to health and wellness. All information you input will used to help me provide you with the best possible service. You can keep it open ended and i will use it to help you with your goals.")
 
-    cool:dict = sample()
-    food_insight:dict = search_for_food_insights()
+    with st.spinner("Please wait..."):
+        st.title('Your Personal Wellness')
+        st.markdown("This is where you can your progress and thought with regards to health and wellness. All information you input will used to help me provide you with the best possible service. You can keep it open ended and i will use it to help you with your goals.")
 
-    st.title("Your food insights")
-    st.markdown(food_insight['response'])
+        journal_rag_response:dict = journal_rag()
+        food_insight:dict = search_for_food_insights()
+
+        st.title("Your food insights")
+        st.markdown(food_insight['response'])
 
 
-    # print(cool['messages'])
-    st.title("Life Progress")
-    st.markdown(cool['response'])
-    data = load_data()
+        # print(journal_rag_response['messages'])
+        st.title("Life Progress")
+        st.markdown(journal_rag_response['response'])
+        data = load_data()
+    st.success("communicating with server...")
+
+    
 
     # st.write()
-    # sample = sample()
+    # journal_rag = journal_rag()
 
     if 'editing_entry' not in st.session_state:
         st.session_state['editing_entry'] = None
