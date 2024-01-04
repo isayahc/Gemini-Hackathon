@@ -34,7 +34,7 @@ def get_user_credentials() -> Tuple[str,str]:
 user_email, user_api_key = get_user_credentials()
 
 
-def load_data() -> pd.DataFrame:
+def load_journal_entries() -> pd.DataFrame:
     user_email = st.session_state['user_email']
     user_api_key = st.session_state['user_api_key']
     data = get_entries(email=user_email, api_key=user_api_key)
@@ -46,6 +46,11 @@ def load_data() -> pd.DataFrame:
     else:
         df = pd.DataFrame(["id", "email", "date", "content"])
     return df
+
+def delete_entry_with_id(entry_id: str):
+    delete_entry(email=user_email, api_key=user_api_key, entry_id=entry_id)
+    st.session_state['data'] = load_journal_entries()  # Reload the data
+    st.experimental_rerun()
 
 
 @st.cache_data(ttl=(3600/2))
@@ -77,12 +82,6 @@ def search_for_food_insights() -> Dict:
     return data
 
 
-def delete_entry_with_id(entry_id: str):
-    delete_entry(email=user_email, api_key=user_api_key, entry_id=entry_id)
-    st.session_state['data'] = load_data()  # Reload the data
-    st.experimental_rerun()
-
-
 def journal_page():
 
     with st.spinner("communicating with server..."):
@@ -98,7 +97,7 @@ def journal_page():
 
         st.title("Life Progress")
         st.markdown(journal_rag_response['response'])
-        data = load_data()
+        data = load_journal_entries()
 
     
 
