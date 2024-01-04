@@ -11,16 +11,6 @@ DEV_API_KEY = os.getenv('DEV_API_KEY')
 DEV_EMAIL = os.getenv('DEV_EMAIL')
 
 
-# if os.getenv('DEV_ENV'):
-#     user_api_key = os.getenv('DEV_API_KEY')
-#     user_email = os.getenv('DEV_EMAIL')
-#     st.session_state['user_email'] = user_email
-#     st.session_state['user_api_key'] = user_api_key
-# else:
-#     user_email = st.session_state['user_email']
-#     user_api_key = st.session_state['user_api_key']
-
-
 def get_user_credentials() -> Tuple[str,str]:
     """gets the credentials to interface with API
     
@@ -43,7 +33,8 @@ def get_user_credentials() -> Tuple[str,str]:
 
 user_email, user_api_key = get_user_credentials()
 
-def load_data():
+
+def load_data() -> pd.DataFrame:
     user_email = st.session_state['user_email']
     user_api_key = st.session_state['user_api_key']
     data = get_entries(email=user_email, api_key=user_api_key)
@@ -56,8 +47,9 @@ def load_data():
         df = pd.DataFrame(["id", "email", "date", "content"])
     return df
 
+
 @st.cache_data(ttl=(3600/2))
-def journal_rag():
+def journal_rag() -> Dict:
     query = "based on the content of the data provide:\
         1: the user with some tips on their life style, \
         2: comment on progress they have made if any\
@@ -69,8 +61,9 @@ def journal_rag():
     data = query_entries(email=user_email, api_key=user_api_key, query=query)
     return data
 
+
 @st.cache_data(ttl=(3600/2))
-def search_for_food_insights():
+def search_for_food_insights() -> Dict:
     query = "based on the content of the data provide:\
         1: the user with some tips on their life style, \
         2: find any dietary needs\
@@ -83,6 +76,7 @@ def search_for_food_insights():
     data = query_entries(email=user_email, api_key=user_api_key, query=query)
     return data
 
+
 def delete_entry_with_id(entry_id: str):
     delete_entry(email=user_email, api_key=user_api_key, entry_id=entry_id)
     st.session_state['data'] = load_data()  # Reload the data
@@ -90,8 +84,6 @@ def delete_entry_with_id(entry_id: str):
 
 
 def journal_page():
-
-   
 
     with st.spinner("Please wait..."):
         st.title('Your Personal Wellness')
