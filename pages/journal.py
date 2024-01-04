@@ -4,17 +4,44 @@ from src.Utils.api_utils import get_entries, add_entry, delete_entry, update_ent
 from datetime import datetime
 import json
 import os
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Tuple
+
+DEV_ENV = os.getenv('DEV_ENV')
+DEV_API_KEY = os.getenv('DEV_API_KEY')
+DEV_EMAIL = os.getenv('DEV_EMAIL')
 
 
-if os.getenv('DEV_ENV'):
-    user_api_key = os.getenv('DEV_API_KEY')
-    user_email = os.getenv('DEV_EMAIL')
-    st.session_state['user_email'] = user_email
-    st.session_state['user_api_key'] = user_api_key
-else:
-    user_email = st.session_state['user_email']
-    user_api_key = st.session_state['user_api_key']
+# if os.getenv('DEV_ENV'):
+#     user_api_key = os.getenv('DEV_API_KEY')
+#     user_email = os.getenv('DEV_EMAIL')
+#     st.session_state['user_email'] = user_email
+#     st.session_state['user_api_key'] = user_api_key
+# else:
+#     user_email = st.session_state['user_email']
+#     user_api_key = st.session_state['user_api_key']
+
+
+def get_user_credentials() -> Tuple[str,str]:
+    """gets the credentials to interface with API
+    
+    Keyword arguments:
+    argument -- description
+    ## Return: 
+    Tuple(user_email, user_api_key)
+    """
+    
+    if DEV_ENV:
+        user_api_key = DEV_API_KEY
+        user_email = DEV_EMAIL
+        st.session_state['user_email'] = user_email
+        st.session_state['user_api_key'] = user_api_key
+    else:
+        user_email = st.session_state['user_email']
+        user_api_key = st.session_state['user_api_key']
+
+    return user_email, user_api_key
+
+user_email, user_api_key = get_user_credentials()
 
 def load_data():
     user_email = st.session_state['user_email']
@@ -63,6 +90,8 @@ def delete_entry_with_id(entry_id: str):
 
 
 def journal_page():
+
+   
 
     with st.spinner("Please wait..."):
         st.title('Your Personal Wellness')
