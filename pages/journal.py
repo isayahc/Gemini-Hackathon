@@ -94,13 +94,12 @@ def journal_page():
         st.title("Your food insights")
         st.markdown(food_insight['response'])
 
-
         st.title("Life Progress")
         st.markdown(journal_rag_response['response'])
+
         data = load_journal_entries()
 
     
-
     if 'editing_entry' not in st.session_state:
         st.session_state['editing_entry'] = None
 
@@ -112,10 +111,8 @@ def journal_page():
         # Format today's date as a string in the 'YYYY-MM-DD' format
         formatted_today = today.strftime('%Y-%m-%d')
 
-
         entry_date = st.date_input("Date", today)
 
-        
         entry_text = st.text_area("Journal content", help="You can use Markdown formatting here.")
         submit_button = st.form_submit_button("Submit")
 
@@ -145,11 +142,14 @@ def journal_page():
                             new_entry_date = entry_date.isoformat()
                             new_content = st.text_area("Edit your entry:", value=row['content'])
                             save_button = st.form_submit_button('Save')
-                            if save_button:
-                                print((row['id'], new_content))
-                                # update_entry_with_id(row['id'], new_content)
-                                # dated = row['date'].strftime('%Y-%m-%d')
-                                update_entry(email=user_email, api_key=user_api_key, entry_id=row['id'], date=new_entry_date, content=new_content)
+                            if save_button:                                                                               
+                                update_entry(
+                                    email=user_email,
+                                    api_key=user_api_key,
+                                    entry_id=row['id'],
+                                    date=new_entry_date,
+                                    content=new_content,
+                                    )
                                 st.session_state['editing_entry'] = None
                                 st.experimental_rerun()
                     else:
