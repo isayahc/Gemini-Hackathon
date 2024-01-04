@@ -66,6 +66,16 @@ def delete_entry(email: str, api_key: str, entry_id: str) -> Dict:
 
 
 def add_entry(email: str, api_key: str, date: str, content: str) -> Dict:
+    """
+    Adds an entry to the database
+
+    ## Parameters:
+    - email (str): The email address associated with the entry.
+    - api_key (str): The API key for authentication.
+
+    ## Returns:
+    - Dict[str, Any]: The JSON response from the server.
+    """
     url = f"{os.getenv('API_DOMAIN')}/api/v1/add-entry"
     headers = {
         "User-Agent": USER_AGENT
@@ -96,14 +106,14 @@ def update_entry(email: str, api_key: str, entry_id: str, date: datetime.date, c
     """
     Updates an existing entry on the server.
 
-    Parameters:
+    ## Parameters:
     - email (str): The email address associated with the entry.
     - api_key (str): The API key for authentication.
     - entry_id (str): The unique identifier for the entry to update.
     - date (datetime.date): The date of the entry.
     - content (str): The content of the entry.
 
-    Returns:
+    ## Returns:
     - Dict[str, Any]: The JSON response from the server.
     """
     url = f"{os.getenv('API_DOMAIN')}/api/v1/update-entry/{entry_id}"
