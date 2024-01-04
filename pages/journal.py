@@ -85,7 +85,7 @@ def delete_entry_with_id(entry_id: str):
 
 def journal_page():
 
-    with st.spinner("Please wait..."):
+    with st.spinner("communicating with server..."):
         st.title('Your Personal Wellness')
         st.markdown("This is where you can your progress and thought with regards to health and wellness. All information you input will used to help me provide you with the best possible service. You can keep it open ended and i will use it to help you with your goals.")
 
@@ -99,7 +99,6 @@ def journal_page():
         st.title("Life Progress")
         st.markdown(journal_rag_response['response'])
         data = load_data()
-    st.success("communicating with server...")
 
     
 
