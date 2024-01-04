@@ -23,7 +23,6 @@ def load_data():
 
     if data:
         df = pd.DataFrame(data)
-        # df['date'] = pd.to_datetime(df['date'])
         df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce')
 
     else:
@@ -82,16 +81,12 @@ def journal_page():
         st.markdown(food_insight['response'])
 
 
-        # print(journal_rag_response['messages'])
         st.title("Life Progress")
         st.markdown(journal_rag_response['response'])
         data = load_data()
     st.success("communicating with server...")
 
     
-
-    # st.write()
-    # journal_rag = journal_rag()
 
     if 'editing_entry' not in st.session_state:
         st.session_state['editing_entry'] = None
@@ -162,14 +157,7 @@ def journal_page():
     else:
          
         st.write("No data available")
-
-
-                # Form for new journal entry
-
-
-        # Edit form displayed when an 'Edit' button is clicked
-
-
         st.markdown("---")
+
 if __name__ == "__main__":
     journal_page()
