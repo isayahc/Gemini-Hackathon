@@ -54,8 +54,6 @@ def search_for_food_insights():
     
         # please also take notice of the dates of the entries and determin if the user is progressing in anyway"
     data = query_entries(email=user_email, api_key=user_api_key, query=query)
-    
-    x=0
     return data
 
 def delete_entry_with_id(entry_id: str):
