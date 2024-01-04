@@ -169,8 +169,11 @@ def journal_page():
                         st.experimental_rerun()
     else:
          
-        st.write("No data available")
-        st.markdown("---")
+        st.markdown(
+            "No data available\
+            ---\
+                "
+                )
 
 if __name__ == "__main__":
     journal_page()
